@@ -1,5 +1,6 @@
 FILES = $(shell ls --color=never -v chapters)
 LASTFILE = $(shell ls --color=never -v chapters | tail -n1)
+VIEWER = zathura
 
 preparefull:
 	@rm -f notes.latex
@@ -33,10 +34,10 @@ last: preparelast
 	-pdflatex -draftmode --interaction batchmode -output-format pdf last.latex
 
 lastpreview: last
-	zathura last.pdf
+	$(VIEWER) last.pdf
 
 pdfpreview: pdf
-	zathura notes.pdf
+	$(VIEWER) notes.pdf
 
 livepreview: preparelast
 	latexmk -pdf -pvc -e '$$latex=q/latex %O -shell-escape %S/' last.latex
@@ -45,9 +46,10 @@ clean:
 	rm -f *.log *.aux *.fdb_latexmk *.fls
 	echo "Pulizia Completa"
 
-moreclean: clean
+cleaner: clean
 	rm -f notes.pdf last.pdf
 	echo "Pulizia profonda completa"
 
 cleanest: moreclean
 	rm -f *.fmt
+	echo "Pulizia profondissima completa"
