@@ -13,6 +13,8 @@ Makefile-based fast cornell-style note creation
 
 `make preamble` Precompiles the preamble, necessary to do it at least once to use all the other commands
 
+`make new` Creates a new Chapter (numbered from 1.tex to infinity), and opens the $(EDITOR), ready to modify it
+
 `make pdf` Creates the full pdf, with all the chapters one after the other, in order (called notes.pdf)
 
 `make last` Creates a pdf with only the last chapter (called last.pdf)

@@ -1,6 +1,8 @@
 FILES = $(shell ls --color=never -v chapters)
 LASTFILE = $(shell ls --color=never -v chapters | tail -n1)
 VIEWER = zathura
+MATERIA = Nessuna Materia
+STDHEADER='%%Note di $(MATERIA)\n%%Sommario: <+SOMMARIO+>\n\n\n'
 
 preparefull:
 	@rm -f notes.tex
@@ -42,14 +44,24 @@ pdfpreview: pdf
 livepreview: preparelast
 	latexmk -pdf -pvc -e '$$latex=q/latex %O -shell-escape %S/' last.tex
 
+new:
+	@if [ ! -f chapters/1.tex ]; then \
+		printf $(STDHEADER) >> chapters/1.tex; \
+		$(EDITOR) chapters/1.tex; \
+	else \
+		f=$(shell expr $(basename $(LASTFILE)) + 1); \
+		printf $(STDHEADER) > chapters/$$f.tex; \
+		$(EDITOR) chapters/$$f.tex; \
+	fi
+
 clean:
 	rm -f *.log *.aux *.fdb_latexmk *.fls
-	echo "Pulizia Completa"
+	@echo "Pulizia Completa"
 
 cleaner: clean
 	rm -f notes.pdf last.pdf notes.tex last.tex
-	echo "Pulizia profonda completa"
+	@echo "Pulizia profonda completa"
 
 cleanest: cleaner
 	rm -f *.fmt
-	echo "Pulizia profondissima completa"
+	@echo "Pulizia profondissima completa"
