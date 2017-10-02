@@ -42,7 +42,7 @@ pdfpreview: pdf
 	$(VIEWER) notes.pdf
 
 livepreview: preparelast
-	latexmk -pdf -pvc -e '$$latex=q/latex %O -shell-escape %S/' last.tex
+	latexmk -pdf -pvc -interaction=nonstopmode -e '$$latex=q/latex %O -shell-escape %S/' last.tex
 
 new:
 	@if [ ! -f chapters/1.tex ]; then \
